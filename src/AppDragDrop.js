@@ -26,15 +26,16 @@ export default class AppDragDropDemo extends Component {
     }
     //After drag and drop here transfer data of that element one list to the other.
     onDrop = (ev, cat) => {
-       let id = ev.dataTransfer.getData("id");
-       
-       let tasks = this.state.tasks.filter((task) => {
-           if (task.name == id) {
+       //grab source element(task container that is going to transfer)
+        let id = ev.dataTransfer.getData("id");
+        //code to create new task with updated category
+        let tasks = this.state.tasks.filter((task) => {
+        if (task.name == id) {
                task.category = cat;
            }
            return task;
        });
-
+    //update state   
        this.setState({
            ...this.state,
            tasks
@@ -42,22 +43,26 @@ export default class AppDragDropDemo extends Component {
     }
 /*implemented the below code in the render method,to group tasks into their respective categories.
 wip[] contains all tasks in the wip category and complete[] contains all the completed tasks*/
+    
     render() {
-        var tasks = {
-            wip: [],
-            complete: []
+                var tasks = {
+                    wip: [],
+                    complete: []
         }
 /*Here we are looping through all tasks and creating a div for every task item and storing it in the respective categories.
 After that added an eventhandler ondragstart and pass the id/name or any information you need to persist while the drag/drop is happening.
 I am using name as a unique value to identify the task.Id can also be used as a unique value.*/
         
         this.state.tasks.forEach ((t) => {
+            
             tasks[t.category].push(
                 <div key={t.name} 
+                  
                     onDragStart = {(e) => this.onDragStart(e, t.name)}
                     draggable
                     className="draggable"
                     style = {{backgroundColor: t.bgcolor}}
+                
                 >
                     {t.name}
                 </div>
@@ -65,9 +70,6 @@ I am using name as a unique value to identify the task.Id can also be used as a 
         });
 
         return (
-            /*set header tag.After that in code we want to disable the default dragover event
-            we simple call the event.preventDefault() from the dragover event.
-            third div makes an element droppable container.*/
             
         <div className="container-drag">
                 <h2 className="header">DRAG & DROP DEMO</h2>
