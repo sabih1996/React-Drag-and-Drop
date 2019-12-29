@@ -15,7 +15,9 @@ CORS(app)
 def add_task():
     cur = mysql.connection.cursor()
     tasks = request.get_json()['tasks']
-
+    
+    if(onDrop == true){
     cur.execute("INSERT INTO db_tasks.tasks (tasks) VALUES ('" + str(tasks) + "')")
     mysql.connection.commit()
     result = {'tasks':tasks}
+    }
