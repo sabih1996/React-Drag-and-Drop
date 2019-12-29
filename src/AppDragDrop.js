@@ -3,19 +3,17 @@ import './App.css';
 
 export default class AppDragDropDemo extends Component {
 
-        /*created some tasks here to simulate a simple application.
-         What we intend to do is to drag and drop these tasks into
-         different categories like wip, complete etc.State Object here is used to
-         store these tasks */
+/*created some tasks here to simulate a simple application.What we intend to do is to drag and drop these tasks into
+different categories like wip, complete etc.State Object here is used to store these tasks */
 
     state = {
         tasks: [
-            {name:"Learn Angular",category:"wip", bgcolor: "yellow"},
-            {name:"React", category:"wip", bgcolor:"pink"},
-            {name:"Vue", category:"complete", bgcolor:"skyblue"}
-          ]
-    }
-    //When drag an element it is dragged via its id from one list to other
+                {name:"Learn Angular",category:"wip", bgcolor: "yellow"},
+                {name:"React", category:"wip", bgcolor:"pink"},
+                {name:"Vue", category:"complete", bgcolor:"skyblue"}
+                ]
+            }
+//When drag an element it is dragged via its id from one list to other
     onDragStart = (ev, id) => {
         console.log('dragstart:',id);
         ev.dataTransfer.setData("id", id);
@@ -24,7 +22,10 @@ export default class AppDragDropDemo extends Component {
     onDragOver = (ev) => {
         ev.preventDefault();
     }
-    //After drag and drop here transfer data of that element one list to the other.
+
+/*In the onDrop event handler, we grab the task being dragged by using getData method on the event’s dataTransfer object.We then create a new tasks array by using the filter method,
+and change the category of the task being dragged.setState() will trigger render, and the tasks will be rendered in the right areas.*/
+
     onDrop = (ev, cat) => {
        //grab source element(task container that is going to transfer)
         let id = ev.dataTransfer.getData("id");
@@ -35,7 +36,6 @@ export default class AppDragDropDemo extends Component {
            }
            return task;
        });
-    //update state   
        this.setState({
            ...this.state,
            tasks
@@ -68,7 +68,7 @@ I am using name as a unique value to identify the task.Id can also be used as a 
                 </div>
             );
         });
-
+    //Here added drop handlers to implement drop from complete to wip
         return (
             
         <div className="container-drag">
