@@ -19,5 +19,3 @@ def add_task():
     cur.execute("INSERT INTO db_tasks.tasks (tasks) VALUES ('" + str(tasks) + "')")
     mysql.connection.commit()
     result = {'tasks':tasks}
-
-    return jsonify({"result": result})
